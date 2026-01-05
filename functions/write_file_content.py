@@ -1,4 +1,24 @@
 import os
+from google.genai import types
+
+
+schema_write_file_content = types.FunctionDeclaration(
+    name="write_file_content",
+    description="Writes the provided content to the file_path provided an argument as well. Both file_path and content are provided and if the file path contains new directories which are not available, they will be created. As always this will overwrite the file if it already exist.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="A file in which the contents will be written",
+            ),
+            "content": types.Schema(
+                type=types.Type.STRING,
+                description="The contents that will be written to the file in file_path",
+            ),
+        },
+    ),
+)
 
 
 def write_file_content(working_directory, file_path, content):
