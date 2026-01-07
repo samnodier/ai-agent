@@ -8,11 +8,12 @@ schema_get_file_content = types.FunctionDeclaration(
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
-            "directory": types.Schema(
+            "file_path": types.Schema(
                 type=types.Type.STRING,
                 description="A file path to read the contents from relative to the working directory",
             ),
         },
+        required=["file_path"],
     ),
 )
 
@@ -35,7 +36,9 @@ def get_file_content(working_directory, file_path):
         with open(target_file_path, "r") as file:
             file_content_string = file.read(MAX_CHARS)
             if file.read(1):
-                file_content_string += f'[...File "{target_file_path}" truncated at {MAX_CHARS} characters]'
+                file_content_string += (
+                    f' [...File "{file_path}" truncated at {MAX_CHARS} characters]'
+                )
 
         return file_content_string
 
